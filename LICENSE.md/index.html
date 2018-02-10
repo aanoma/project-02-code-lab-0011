@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" class=" w-100 h-auto" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Meitantei Conan</title>
+</head>
+<style>
+    p,li{
+     color:   #0d0b10;
+    }
+
+    .btn{
+        background-color: #0d0b10;
+    }
+    .btn:hover{
+        background-color: rgba(98,91,98,62);
+    }
+    .card,.list-group-item{
+        background-color: rgba(98,91,98,2);
+    }
+    .sidebar{
+        background-color: rgba(98,91,98,0.25);
+    }
+    .navbar-brand{
+        color: rgba(98,91,98,2);
+    }
+
+</style>
+<body class=" w-100 h-auto" background="https://i.imgur.com/qJhugJE.png">
+
+    <div class="row w-100 h-auto">
+            <a class="navbar-brand ml-4 " href="#">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Detective_Conan_logo.svg/2000px-Detective_Conan_logo.svg.png" width="250" height="75" class="d-inline-block align-top" alt="">
+            </a>
+            <p class="navbar-brand ml-4 ">Charcters</p>
+            <p class="navbar-brand ml-4 ">Movies</p>
+        <p class="navbar-brand ml-4 ">Openings</p>
+        <p class="navbar-brand ml-4 ">Closings</p>
+        </div>
+        <div class="col-md-9" id="root" >
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <img v-bind:src="items.image_url" class="card-img-top" alt="Card image cap">
+                </div>
+                <div class="col-md-8 card">
+                        <h5 class="card-title mt-2" style="color: #0d0b10">{{items.title}}</h5>
+                    <p class="card-text">Aired: {{items.aired_string}} </br> Broadcast: {{items.broadcast}} </br>duration: {{items.duration}} </br>Rating: {{items.rating}} </br>Score: {{items.score}} </p>
+                    <p class="card-text">{{items.synopsis}}</p>
+                    <a v-bind:href="items.link_canonical" class="btn btn-dark mb-3" >Go To MAL</a>
+            </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+
+                    <h5 class="card-title mt-4" style="color: rgba(98,91,98,2)">Charcters</h5>
+                    <ul class="list-group mt-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-for="i in char">
+                            <img v-bind:src="i.image_url"> <a style="color: #0d0b10" v-bind:href="i.url"> {{i.name}}</a>
+                            <span class="badge badge-primary badge-pill" style="background-color: #0d0b10">{{i.role}}</span>
+                        </li>
+                    </ul>
+
+
+                    <h5 class="card-title mt-4" style="color: rgba(98,91,98,2)">Movies & OVAs</h5>
+                    <ul class="list-group mt-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-for="i in movies">
+                            <a style="color: #0d0b10" v-bind:href="i.url"> {{i.title}}</a>
+                            <span class="badge badge-primary badge-pill" style="background-color: #0d0b10">{{i.type}}</span>
+                        </li>
+                    </ul>
+
+                    <h5 class="card-title mt-4" style="color: rgba(98,91,98,2)">Others</h5>
+                    <ul class="list-group mt-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-for="i in other">
+                            <a style="color: #0d0b10" v-bind:href="i.url"> {{i.title}}</a>
+                            <span class="badge badge-primary badge-pill" style="background-color: #0d0b10">{{i.type}}</span>
+                        </li>
+                    </ul>
+
+                    <h5 class="card-title mt-4" style="color: rgba(98,91,98,2)">Summary</h5>
+                    <ul class="list-group mt-4">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" v-for="i in sum">
+                            <a style="color: #0d0b10" v-bind:href="i.url"> {{i.title}}</a>
+                            <span class="badge badge-primary badge-pill" style="background-color: #0d0b10">{{i.type}}</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+                    <div class="col-6">
+                        <h5 class="card-title mt-4" style="color: rgba(98,91,98,2)">Openings</h5>
+                        <ul class="list-group mt-4">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="i in items.opening_theme">
+                                {{i}}
+                            </li>
+                        </ul>
+
+                        <h5 class="card-title mt-4" style="color: rgba(98,91,98,2)">Closings</h5>
+                        <ul class="list-group mt-4">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" v-for="i in items.ending_theme">
+                                {{i}}
+                            </li>
+                        </ul>
+
+
+            </div>
+
+            </div>
+        </div>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+
+        var app=new Vue({
+            el: '#root',
+            data: {
+                items: [],
+                char:[],
+                movies:[],
+                other:[],
+                sum:[]
+            },
+            methods: {
+
+            }
+        })
+
+        axios.get('http://api.jikan.me/anime/235/characters_staff').then(function(response){
+            app.items=(response.data);
+            app.movies=[{"mal_id":779,"type":"anime","url":"https://myanimelist.net/anime/779/Detective_Conan_Movie_01__The_Timed_Skyscraper","title":"Detective Conan Movie 01: The Timed Skyscraper"},{"mal_id":780,"type":"anime","url":"https://myanimelist.net/anime/780/Detective_Conan_Movie_02__The_Fourteenth_Target","title":"Detective Conan Movie 02: The Fourteenth Target"},{"mal_id":781,"type":"anime","url":"https://myanimelist.net/anime/781/Detective_Conan_Movie_03__The_Last_Wizard_of_the_Century","title":"Detective Conan Movie 03: The Last Wizard of the Century"},{"mal_id":1363,"type":"anime","url":"https://myanimelist.net/anime/1363/Detective_Conan_Movie_04__Captured_in_Her_Eyes","title":"Detective Conan Movie 04: Captured in Her Eyes"},{"mal_id":1364,"type":"anime","url":"https://myanimelist.net/anime/1364/Detective_Conan_Movie_05__Countdown_to_Heaven","title":"Detective Conan Movie 05: Countdown to Heaven"},{"mal_id":1365,"type":"anime","url":"https://myanimelist.net/anime/1365/Detective_Conan_Movie_06__The_Phantom_of_Baker_Street","title":"Detective Conan Movie 06: The Phantom of Baker Street"},{"mal_id":1366,"type":"anime","url":"https://myanimelist.net/anime/1366/Detective_Conan_Movie_07__Crossroad_in_the_Ancient_Capital","title":"Detective Conan Movie 07: Crossroad in the Ancient Capital"},{"mal_id":1367,"type":"anime","url":"https://myanimelist.net/anime/1367/Detective_Conan_Movie_08__Magician_of_the_Silver_Sky","title":"Detective Conan Movie 08: Magician of the Silver Sky"},{"mal_id":1368,"type":"anime","url":"https://myanimelist.net/anime/1368/Detective_Conan_OVA_06__Follow_the_Vanished_Diamond_Conan___Heiji_vs_Kid","title":"Detective Conan OVA 06: Follow the Vanished Diamond! Conan &amp; Heiji vs. Kid!"},{"mal_id":1369,"type":"anime","url":"https://myanimelist.net/anime/1369/Detective_Conan_OVA_01__Conan_vs_Kid_vs_Yaiba","title":"Detective Conan OVA 01: Conan vs. Kid vs. Yaiba"},{"mal_id":1505,"type":"anime","url":"https://myanimelist.net/anime/1505/Detective_Conan_Movie_09__Strategy_Above_the_Depths","title":"Detective Conan Movie 09: Strategy Above the Depths"},{"mal_id":1506,"type":"anime","url":"https://myanimelist.net/anime/1506/Detective_Conan_Movie_10__Requiem_of_the_Detectives","title":"Detective Conan Movie 10: Requiem of the Detectives"},{"mal_id":2171,"type":"anime","url":"https://myanimelist.net/anime/2171/Detective_Conan_Movie_11__Jolly_Roger_in_the_Deep_Azure","title":"Detective Conan Movie 11: Jolly Roger in the Deep Azure"},{"mal_id":2512,"type":"anime","url":"https://myanimelist.net/anime/2512/Detective_Conan_OVA_02__16_Suspects","title":"Detective Conan OVA 02: 16 Suspects"},{"mal_id":2513,"type":"anime","url":"https://myanimelist.net/anime/2513/Detective_Conan_OVA_03__Conan_and_Heiji_and_the_Vanished_Boy","title":"Detective Conan OVA 03: Conan and Heiji and the Vanished Boy"},{"mal_id":2514,"type":"anime","url":"https://myanimelist.net/anime/2514/Detective_Conan_OVA_04__Conan_and_Kid_and_Crystal_Mother","title":"Detective Conan OVA 04: Conan and Kid and Crystal Mother"},{"mal_id":2515,"type":"anime","url":"https://myanimelist.net/anime/2515/Detective_Conan_OVA_05__The_Target_is_Kogoro_The_Detective_Boys_Secret_Investigation","title":"Detective Conan OVA 05: The Target is Kogoro! The Detective Boys&#039; Secret Investigation"},{"mal_id":2597,"type":"anime","url":"https://myanimelist.net/anime/2597/Detective_Conan_OVA_07__A_Challenge_from_Agasa_Agasa_vs_Conan_and_the_Detective_Boys","title":"Detective Conan OVA 07: A Challenge from Agasa! Agasa vs. Conan and the Detective Boys"},{"mal_id":4447,"type":"anime","url":"https://myanimelist.net/anime/4447/Detective_Conan_Movie_12__Full_Score_of_Fear","title":"Detective Conan Movie 12: Full Score of Fear"},{"mal_id":5348,"type":"anime","url":"https://myanimelist.net/anime/5348/Detective_Conan_Magic_File_2__Kudou_Shinichi_-_The_Case_of_the_Mysterious_Wall_and_the_Black_Lab","title":"Detective Conan Magic File 2: Kudou Shinichi - The Case of the Mysterious Wall and the Black Lab"},{"mal_id":5460,"type":"anime","url":"https://myanimelist.net/anime/5460/Detective_Conan_Movie_13__The_Raven_Chaser","title":"Detective Conan Movie 13: The Raven Chaser"},{"mal_id":6115,"type":"anime","url":"https://myanimelist.net/anime/6115/Lupin_III_vs_Detective_Conan","title":"Lupin III vs. Detective Conan"},{"mal_id":6198,"type":"anime","url":"https://myanimelist.net/anime/6198/Detective_Conan_OVA_08__High_School_Girl_Detective_Sonoko_Suzukis_Case_Files","title":"Detective Conan OVA 08: High School Girl Detective Sonoko Suzuki&#039;s Case Files"},{"mal_id":6231,"type":"anime","url":"https://myanimelist.net/anime/6231/Detective_Conan_Magic_File_3__Shinichi_and_Ran_-_Memories_of_Mahjong_Tiles_and_Tanabata","title":"Detective Conan Magic File 3: Shinichi and Ran - Memories of Mahjong Tiles and Tanabata"},{"mal_id":6438,"type":"anime","url":"https://myanimelist.net/anime/6438/Detective_Conan_OVA_09__The_Stranger_in_10_Years","title":"Detective Conan OVA 09: The Stranger in 10 Years..."},{"mal_id":6467,"type":"anime","url":"https://myanimelist.net/anime/6467/Detective_Conan_Movie_14__The_Lost_Ship_in_the_Sky","title":"Detective Conan Movie 14: The Lost Ship in the Sky"},{"mal_id":8331,"type":"anime","url":"https://myanimelist.net/anime/8331/Detective_Conan_Magic_File_4__Osaka_Okonomiyaki_Odyssey","title":"Detective Conan Magic File 4: Osaka Okonomiyaki Odyssey"},{"mal_id":8609,"type":"anime","url":"https://myanimelist.net/anime/8609/Detective_Conan_OVA_10__Kid_in_Trap_Island","title":"Detective Conan OVA 10: Kid in Trap Island"},{"mal_id":9785,"type":"anime","url":"https://myanimelist.net/anime/9785/Detective_Conan__Conan_vs_Kid_-_Shark___Jewel","title":"Detective Conan: Conan vs. Kid - Shark &amp; Jewel"},{"mal_id":9786,"type":"anime","url":"https://myanimelist.net/anime/9786/Detective_Conan__Conan_vs_Kid_-_Jet_Black_Sniper","title":"Detective Conan: Conan vs. Kid - Jet Black Sniper"},{"mal_id":9963,"type":"anime","url":"https://myanimelist.net/anime/9963/Detective_Conan_Movie_15__Quarter_of_Silence","title":"Detective Conan Movie 15: Quarter of Silence"},{"mal_id":10531,"type":"anime","url":"https://myanimelist.net/anime/10531/Detective_Conan_Magic_File_5__Niigata_-_Tokyo_Omiyage_Capriccio","title":"Detective Conan Magic File 5: Niigata - Tokyo Omiyage Capriccio"},{"mal_id":10703,"type":"anime","url":"https://myanimelist.net/anime/10703/Detective_Conan_OVA_11__A_Secret_Order_from_London","title":"Detective Conan OVA 11: A Secret Order from London"},{"mal_id":12117,"type":"anime","url":"https://myanimelist.net/anime/12117/Detective_Conan_Movie_16__The_Eleventh_Striker","title":"Detective Conan Movie 16: The Eleventh Striker"},{"mal_id":13837,"type":"anime","url":"https://myanimelist.net/anime/13837/Detective_Conan_Bonus_File__Fantasista_Flower","title":"Detective Conan Bonus File: Fantasista Flower"},{"mal_id":13839,"type":"anime","url":"https://myanimelist.net/anime/13839/Detective_Conan_OVA_12__The_Miracle_of_Excalibur","title":"Detective Conan OVA 12: The Miracle of Excalibur"},{"mal_id":14735,"type":"anime","url":"https://myanimelist.net/anime/14735/Detective_Conan_Movie_17__Private_Eye_in_the_Distant_Sea","title":"Detective Conan Movie 17: Private Eye in the Distant Sea"},{"mal_id":21419,"type":"anime","url":"https://myanimelist.net/anime/21419/Detective_Conan_Movie_18__The_Sniper_from_Another_Dimension","title":"Detective Conan Movie 18: The Sniper from Another Dimension"},{"mal_id":21867,"type":"anime","url":"https://myanimelist.net/anime/21867/The_Disappearance_of_Conan_Edogawa__The_Worst_Two_Days_in_History","title":"The Disappearance of Conan Edogawa: The Worst Two Days in History"},{"mal_id":24169,"type":"anime","url":"https://myanimelist.net/anime/24169/Detective_Conan__The_Fugitive_Kogorou_Mouri","title":"Detective Conan: The Fugitive Kogorou Mouri"},{"mal_id":28479,"type":"anime","url":"https://myanimelist.net/anime/28479/Detective_Conan_Movie_19__The_Hellfire_Sunflowers","title":"Detective Conan Movie 19: The Hellfire Sunflowers"},{"mal_id":32005,"type":"anime","url":"https://myanimelist.net/anime/32005/Detective_Conan_Movie_20__The_Darkest_Nightmare","title":"Detective Conan Movie 20: The Darkest Nightmare"},{"mal_id":34430,"type":"anime","url":"https://myanimelist.net/anime/34430/Detective_Conan_Movie_21__The_Crimson_Love_Letter","title":"Detective Conan Movie 21: The Crimson Love Letter"},{"mal_id":35798,"type":"anime","url":"https://myanimelist.net/anime/35798/Detective_Conan_Movie_22__Zeros_Executioner","title":"Detective Conan Movie 22: Zero&#039;s Executioner"}]
+            app.other=app.items.related.Other
+            app.sum=app.items.related.Summary
+            arr=[1,4,5,0,2,3,6,7,15,21,29,48,49,50,51,52,55,75,92,112,113,114,139,140,141]
+            for(i=0;i<arr.length;i++){
+            app.char.push(app.items.character[arr[i]])
+            }
+
+        });
+
+
+
+    </script>
+</body>
+</html>
